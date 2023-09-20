@@ -89,6 +89,7 @@ Actual result:
 ---------------------------------
 Steps:
 Make 3 attempts to register an employee with incorrect data types (name/position/age)
+
 1.
 [
 
