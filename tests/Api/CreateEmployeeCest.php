@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Api;
@@ -14,7 +15,6 @@ class CreateEmployeeCest
 {
     public int $employeeId;
 
-
     public string $randomEmail;
 
     public function createEmployeeValid(ApiTester $I): void
@@ -22,7 +22,6 @@ class CreateEmployeeCest
         $this->randomEmail = $this->_createUniqueEmail($I, 3);
 
         $I->wantToTest("Create new employee with valid values");
-
 
         $requestBody = [
             "name" => "boris",
@@ -57,7 +56,7 @@ class CreateEmployeeCest
      * @param int $attempts
      * @return string
      */
-    public function _createUniqueEmail(ApiTester $I, int $attempts): string
+    public static function _createUniqueEmail(ApiTester $I, int $attempts): string
     {
         $attempts -= 1;
         // get all employees
@@ -71,13 +70,11 @@ class CreateEmployeeCest
         foreach ($jsonArray as $item) {
             if (isset($item['email']) && $item['email'] === $randomEmail) {
                 if ($attempts == 0) return "erroremail";
-                return $this->_createUniqueEmail($I, $attempts);
+                return self::_createUniqueEmail($I, $attempts);
             }
         }
         return $randomEmail;
     }
-
-
 
     // 02-POST-NEG- FAILED
 
@@ -108,9 +105,6 @@ class CreateEmployeeCest
         ]);
     }
 
-
-
-
     // 03-POST-NEG- PASSED
 
     /** @dataProvider fieldsProvider */
@@ -122,8 +116,6 @@ class CreateEmployeeCest
         $I->seeResponseMatchesJsonType([
             'message' => 'string'
         ]);
-
-
     }
 
     /** @dataProvider invalidTypesProvider */
@@ -139,16 +131,11 @@ class CreateEmployeeCest
         ]);
     }
 
-
-
     //  04-POST-NEG - FAILED
-
     #[Depends('createEmployeeValid')]
     public function createEmployeeNonUniqueEmail(ApiTester $I): void
     {
         $I->wantToTest("Create new employee with non-unique email");
-
-
         $requestBody = [
             "name" => "boris",
             "email" => $this->randomEmail,
@@ -157,7 +144,6 @@ class CreateEmployeeCest
         ];
         $response = $I->sendPostAsJson('/employee/add', $requestBody);
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
-
     }
 
     /**
@@ -167,13 +153,10 @@ class CreateEmployeeCest
      */
     public function postCondition(ApiTester $I): void
     {
-
         $I->sendDelete('/employee/remove/' . $this->employeeId);
     }
 
-
     //   05-POST-NEG - FAILED
-
     protected function emptyFieldsProvider(): iterable
     {
         yield
@@ -202,7 +185,6 @@ class CreateEmployeeCest
                 "email" => "borisov@yandex.ru",
                 "position" => "middle",
             ]];
-
     }
 
     protected function emailProvider(): iterable
@@ -211,11 +193,9 @@ class CreateEmployeeCest
         yield ['examplin@'];
         yield ['examplin@.'];
         yield ['examplin@yandex.'];
-
     }
 
-//  10-POST-NEG - FAILED
-
+    //  10-POST-NEG - FAILED
     protected function fieldsProvider(): iterable
     {
         yield
@@ -252,7 +232,6 @@ class CreateEmployeeCest
 
     protected function invalidTypesProvider(): iterable
     {
-
         yield [[
 
             "name" => 123,
@@ -274,7 +253,5 @@ class CreateEmployeeCest
             "position" => "middle",
             "age" => "SomeWord"
         ]];
-
     }
-
 }

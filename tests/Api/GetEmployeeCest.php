@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace Tests\Api;
 
-
 use Codeception\Attribute\Depends;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Attributes\Before;
 use Tests\Support\ApiTester;
 
+require_once "CreateEmployeeCest.php";
+
 class GetEmployeeCest
 {
     public int $employeeId;
 
+    protected string $email;
+
     #[Before("getExistingEmployee")]
     public function preCondition(ApiTester $I): void
     {
-
+        $this->email = CreateEmployeeCest::_createUniqueEmail($I, 4);
         $requestBody = [
             "name" => "boris",
-            "email" => "borisov@yandex.ru",
+            "email" => $this->email,
             "position" => "middle",
             "age" => 29
         ];
@@ -30,7 +33,6 @@ class GetEmployeeCest
             'id' => 'integer'
         ]);
         $this->employeeId = $response['id'];
-
     }
 
     // 06-GET-POS FAILED
@@ -41,7 +43,7 @@ class GetEmployeeCest
         $I->seeResponseContainsJson([
             "id" => $this->employeeId,
             "name" => "boris",
-            "email" => "borisov@yandex.ru",
+            "email" => $this->email,
             "position" => "middle",
             "age" => 29
         ]);
@@ -65,16 +67,13 @@ class GetEmployeeCest
         ]);
     }
 
-
     /**
      * Delete employee after the work
      * @param ApiTester $I
      * @return void
      */
-
     public function postCondition(ApiTester $I): void
     {
-
         $I->sendDelete('/employee/remove/' . $this->employeeId);
     }
 }

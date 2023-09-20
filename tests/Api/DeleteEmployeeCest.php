@@ -9,6 +9,8 @@ use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Attributes\Before;
 use Tests\Support\ApiTester;
 
+require_once "CreateEmployeeCest.php";
+
 class DeleteEmployeeCest
 {
     public int $employeeId;
@@ -16,9 +18,10 @@ class DeleteEmployeeCest
     #[Before("deleteExistingEmployeePos")]
     public function preCondition(ApiTester $I): void
     {
+        $email = CreateEmployeeCest::_createUniqueEmail($I, 4);
         $requestBody = [
             "name" => "Dboris",
-            "email" => "borisov@yandex.ru",
+            "email" => $email,
             "position" => "middle",
             "age" => 33
         ];
@@ -35,7 +38,7 @@ class DeleteEmployeeCest
         $I->seeResponseContainsJson([
             "id" => $this->employeeId,
             "name" => "Dboris",
-            "email" => "borisov@yandex.ru",
+            "email" => $email,
             "position" => "middle",
             "age" => "33"
         ]);
@@ -64,6 +67,4 @@ class DeleteEmployeeCest
         $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseContainsJson(["message" => "Employee not found"]);
     }
-
-
 }
