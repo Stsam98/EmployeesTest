@@ -1,6 +1,7 @@
 
 ---------------------------------------------------------------------------------
 01-POST-POS
+
 Name: Create new employee with valid values.
 Requirement: №4
 Module: Employee
@@ -22,6 +23,7 @@ Expected result:
 3. User added to database.
 ---------------------------------------------------------------------------------
 02-POST-NEG
+
 Name: Create without required fields
 Requirement №4.2
 Module: Employee
@@ -47,6 +49,7 @@ Send 4 post request /api/v1/employee/add
 
 ---------------------------------------------------------------------------------
 03-POST-NEG
+
 Name: Mask email
 Requirement №4.2
 Module: Employee
@@ -55,8 +58,10 @@ Steps:
 Make post requests /api/v1/employee/add with invalid emails for check mask email "user_name@server_name.domain"
 Expected result:
 HTTP Status: 400
+
 ---------------------------------------------------------------------------------
 04-POST-NEG
+
 Name: Create with empty fields
 Requirement №4.1, №4.3, №4.4
 Module: Employee
@@ -74,6 +79,7 @@ Expected result:
 4. HTTP Status: 400
 ---------------------------------------------------------------------------------
 05-POST-NEG
+
 Name: Create with incorrect types
 Requirement №4.1, №4.3, №4.4
 Module: Employee
@@ -91,6 +97,7 @@ Expected result:
 3. HTTP Status: 400
 ---------------------------------------------------------------------------------
 06-GET-POS
+
 Name: Get an employee using an id.
 Requirement №3.
 Module: Employee
@@ -119,6 +126,7 @@ The response body in JSON format is returned from the server:
 HTTP Status: 200
 ---------------------------------------------------------------------------------
 07-GET-NEG
+
 Name: Get a non-existent employee using an id
 Requirement №3.
 Module: Employee
@@ -144,6 +152,7 @@ The response body in JSON format is returned from the server:
 HTTP Status: 404
 ---------------------------------------------------------------------------------
 08-DELETE-POS
+
 Name: Delete an employee by id
 Requirement №5.
 Module: Employee
@@ -166,6 +175,7 @@ Expected result:
 2. HTTP Status: 404
 ---------------------------------------------------------------------------------
 09-DELETE-NEG
+
 Name: Delete a non-existent employee
 Requirement №5.
 Module: Employee
@@ -191,6 +201,7 @@ Preparation:
    }
 ---------------------------------------------------------------------------------
 10-POST-NEG
+
 Name: Create with non-unique email
 Requirement №4.
 Module: Employee

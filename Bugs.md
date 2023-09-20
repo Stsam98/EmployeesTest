@@ -1,6 +1,5 @@
 01-POST-POS - PASSED
 ---------------------------------
----------------------------------
 02-POST-NEG - FAILED
 ---------------------------------
 Steps:
@@ -149,13 +148,12 @@ Actual result:
 "age": "string"
 }
 HTTP Status: 201
-
 ---------------------------------
 07-GET-NEG  - SKIPPED
 ---------------------------------
-Case: Get a non-existent employee by id
-To get a non-existent user, you must first delete the existing one and check that there really is no such user.
+Case: Get a non-existent employee by id To get a non-existent user, you must first delete the existing one and check that there really is no such user.
 This cannot be done because the application has a bug and the user cannot be deleted.
+
 ---------------------------------
 08-DELETE-POS - FAILED
 ---------------------------------
@@ -175,6 +173,7 @@ Actual result:
 Case: Delete a non-existent employee by id
 To delete a non-existent user, you must first delete the existing one and check that there really is no such user. 
 This cannot be done because the application has a bug and the user cannot be deleted.
+
 ---------------------------------
 10-POST-NEG - FAILED
 ---------------------------------
